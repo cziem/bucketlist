@@ -105,8 +105,6 @@ module.exports = {
         createdBy: req.decoded.id
       })
 
-      bucket.todoList.push(req.body.todo_list)
-
       const bucketList = await BucketList.create(bucket)
 
       res.status(201).json(bucketList)
@@ -117,71 +115,160 @@ module.exports = {
 
   /* Get a list of all buckets */
   getBucketLists: async (req, res) => {
-    const buckets = await BucketList.find({})
-    res.json(buckets)
+    try {
+      const buckets = await BucketList.find({})
+      return res.json(buckets)
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Get a single bucketlist */
   getBucketList: async (req, res) => {
-    await res.json({
-      message: 'Request to get a single bucketlist',
-      status: 'success'
-    })
+    const { id } = req.params
+
+    try {
+      const bucketList = await BucketList.findById(id)
+
+      if (bucketList) {
+        return res.json(bucketList)
+      } else {
+        return res.status(404).send('Bucketlist does not exist')
+      }
+
+    } catch (error) {
+      return res.status(404).send(error.message)
+    }
   },
 
   /* Update a bucketlist */
   updateBucketList: async (req, res) => {
-    await res.json({
-      message: 'Request to update a bucketlist',
-      status: 'success'
-    })
+    const { id } = req.params
+
+    try {
+      const bucketList = await BucketList.findByIdAndUpdate(id, {
+        $set: {
+          name: req.body.name,
+          updatedAt: Date.now()
+        }
+      }, { new: true })
+
+      return res.status(200).json(bucketList)
+    } catch (error) {
+      return res.status(404).send(error.message)
+    }
   },
 
   /* Delete a bucketlist */
   deleteBucketList: async (req, res) => {
-    await res.json({
-      message: 'Request to delete a bucketlist',
-      status: 'success'
-    })
+    const { id } = req.params
+
+    try {
+      await BucketList.findByIdAndDelete(id)
+
+      return res.status(200).send('Item deleted')
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Create a new item in bucketlist */
   createItem: async (req, res) => {
-    await res.json({
-      message: 'Request to create a new item in bucketlist',
-      status: 'success'
-    })
+    const { id } = req.params
+
+    try {
+      const bucketList = await BucketList.findById(id)
+
+      const existingItem = bucketList.todoList.find(item => item.name === req.body.name)
+
+      if (existingItem) return res.status(400).send('Item with name already exists')
+
+      const todoItem = {
+        name: req.body.name,
+        completed: req.body.completed
+      }
+
+      bucketList.todoList.push(todoItem)
+
+      const result = await bucketList.save(bucketList)
+
+      return res.status(201).json(result)
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Get all items in a bucketlist */
   getItems: async (req, res) => {
-    await res.json({
-      message: 'Request to get all items in a bucketlist',
-      status: 'success'
-    })
+    const { id } = req.params
+
+    try {
+      const bucketList = await BucketList.findById(id)
+
+      if (!bucketList) return res.status(404).send('Bucketlist does not exist.')
+
+      return res.json(bucketList.todoList)
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Get a single item in a bucketlist */
   getItem: async (req, res) => {
-    await res.json({
-      message: 'Request to get a single item in a bucketlist',
-      status: 'success'
-    })
+    const { id, item_id } = req.params
+
+    try {
+      const bucketList = await BucketList.findById(id)
+
+      if (!bucketList) return res.status(404).send('Bucketlist does not exist.')
+
+      const todoItem = bucketList.todoList.find(item => item._id.toString() === item_id)
+
+      if (!todoItem) return res.status(401).send('Item does not exist')
+
+      return res.json(todoItem)
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Update a bucketlist item */
   updateItem: async (req, res) => {
-    await res.json({
-      message: 'Request to update an item in a bucketlist',
-      status: 'success'
-    })
+    const { id, item_id } = req.params
+
+    try {
+      const bucketList = await BucketList.findById(id)
+
+      if (!bucketList) return res.status(404).send('Bucketlist does not exist.')
+
+      const todoItem = bucketList.todoList.find(item => item._id.toString() === item_id)
+
+      if (!todoItem) return res.status(401).send('Item does not exist')
+
+      todoItem.set({ name: req.body.name, completed: req.body.completed })
+
+      await bucketList.save(todoItem)
+
+      return res.json(todoItem)
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   },
 
   /* Delete an item in a bucketlist */
   deleteItem: async (req, res) => {
-    await res.json({
-      message: 'Request to delete a single item in a bucketlist',
-      status: 'success'
-    })
+    const { id, item_id } = req.params
+
+    try {
+      const bucketList = await BucketList.findByIdAndUpdate(id, {
+        '$pull': { todoList: { '_id': item_id } }
+      }, { new: true })
+
+      if (!bucketList) return res.status(404).send('Bucketlist does not exist.')
+
+      return res.status(200).send('Item deleted')
+    } catch (error) {
+      return res.status(400).send(error.message)
+    }
   }
 }

@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: true
+  useFindAndModify: false
 })
   .then(() => console.log(`Bucketlist has connected to DB successfully...`))
   .catch(error => console.error(`An error occurred while connecting to the DB... ${error}`))

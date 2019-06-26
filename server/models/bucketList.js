@@ -1,19 +1,16 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-/* import sub models for User and List items */
-const ListItems = require('./listItems')
-
 const bucketListSchema = new Schema({
   name: { type: String, required: true, unique: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date },
   todoList: [
     {
-      name: { type: String, required: true },
+      name: { type: String },
+      completed: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
-      updatedAt: { type: Date },
-      completed: { type: Boolean, default: false }
+      updatedAt: { type: Date }
     }
   ],
   createdBy: {
