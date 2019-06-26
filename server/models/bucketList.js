@@ -10,15 +10,15 @@ const bucketListSchema = new Schema({
   updatedAt: { type: Date },
   todoList: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'listitems'
+      name: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
+      updatedAt: { type: Date },
+      completed: { type: Boolean, default: false }
     }
   ],
   createdBy: {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 })
 

@@ -16,7 +16,13 @@ module.exports = {
 
       const { username, email, password, name } = req.body
 
-      const hashed = await bcrypt.hash(password, 10)
+      const hashed = await bcrypt.hash(password, process.env.SALT_ROUNDS)
+
+
+      const payload = { user: user.name, id: user._id }
+      const options = { expiresIn: '2d' }
+      const secret = process.env.APP_SECRET
+      const token = jwt.sign(payload, secret, options)
 
       const user = await User.create({
         username,
@@ -31,7 +37,8 @@ module.exports = {
         name: user.name,
         email: user.email,
         createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        updatedAt: user.updatedAt,
+        token
       }
 
       return res.status(201).json(details)
@@ -52,7 +59,13 @@ module.exports = {
       const hashed = await bcrypt.compare(password, user.password)
 
       if (hashed) {
+        const payload = { user: user.name, id: user._id }
+        const options = { expiresIn: '2d' }
+        const secret = process.env.APP_SECRET
+        const token = jwt.sign(payload, secret, options)
+
         const details = {
+          token,
           id: user._id,
           username: user.username,
           name: user.name,
@@ -87,16 +100,16 @@ module.exports = {
 
       if (existingBucket) return res.status(400).send('BucketList with name already exists')
 
-      const bucketList = new BucketList({
+      const bucket = new BucketList({
         name,
-        user: req.user.id
+        createdBy: req.decoded.id
       })
 
-      bucketList.todoList.push(req.body.todo_list)
+      bucket.todoList.push(req.body.todo_list)
 
-      res.send('working on the api')
+      const bucketList = await BucketList.create(bucket)
 
-      console.log(bucketList)
+      res.status(201).json(bucketList)
     } catch (error) {
       return res.status(400).send(error.message)
     }
@@ -104,10 +117,8 @@ module.exports = {
 
   /* Get a list of all buckets */
   getBucketLists: async (req, res) => {
-    await res.json({
-      message: 'Request to get a list of all buckets',
-      status: 'success'
-    })
+    const buckets = await BucketList.find({})
+    res.json(buckets)
   },
 
   /* Get a single bucketlist */

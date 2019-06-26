@@ -3,6 +3,7 @@ const router = express.Router()
 
 /* import the app route controller logic */
 const bucketListController = require('../controllers/controller.js')
+const authUser = require('../middlewares/auth').validateToken
 
 /* 
 * @method: POST
@@ -34,7 +35,7 @@ router.get('/auth/logout', bucketListController.logout)
 * @auth: Private
 * @desc: Create a new bucketlist
 */
-router.post('/auth/bucketlists', bucketListController.createBucketList)
+router.post('/auth/bucketlists', authUser, bucketListController.createBucketList)
 
 /* 
 * @method: GET
@@ -42,7 +43,7 @@ router.post('/auth/bucketlists', bucketListController.createBucketList)
 * @auth: Private
 * @desc: Get all bucketlists
 */
-router.get('/auth/bucketlists', bucketListController.getBucketLists)
+router.get('/auth/bucketlists', authUser, bucketListController.getBucketLists)
 
 /* 
 * @method: GET
@@ -50,7 +51,7 @@ router.get('/auth/bucketlists', bucketListController.getBucketLists)
 * @auth: Private
 * @desc: Get a single bucketlist
 */
-router.get('/auth/bucketlists/:id', bucketListController.getBucketList)
+router.get('/auth/bucketlists/:id', authUser, bucketListController.getBucketList)
 
 /* 
 * @method: PUT
@@ -58,7 +59,7 @@ router.get('/auth/bucketlists/:id', bucketListController.getBucketList)
 * @auth: Private
 * @desc: Update a single bucketlist
 */
-router.put('/auth/bucketlists/:id', bucketListController.updateBucketList)
+router.put('/auth/bucketlists/:id', authUser, bucketListController.updateBucketList)
 
 /* 
 * @method: DELETE
@@ -66,7 +67,7 @@ router.put('/auth/bucketlists/:id', bucketListController.updateBucketList)
 * @auth: Private
 * @desc: Delete a single bucketlist
 */
-router.delete('/auth/bucketlists/:id', bucketListController.deleteBucketList)
+router.delete('/auth/bucketlists/:id', authUser, bucketListController.deleteBucketList)
 
 /* 
 * @method: POST
@@ -74,7 +75,7 @@ router.delete('/auth/bucketlists/:id', bucketListController.deleteBucketList)
 * @auth: Private
 * @desc: Create a new item in a bucketlist
 */
-router.post('/auth/bucketlists/:id/items', bucketListController.createItem)
+router.post('/auth/bucketlists/:id/items', authUser, bucketListController.createItem)
 
 /* 
 * @method: GET
@@ -82,7 +83,7 @@ router.post('/auth/bucketlists/:id/items', bucketListController.createItem)
 * @auth: Private
 * @desc: Get all items in a bucketlists
 */
-router.get('/auth/bucketlists/:id/items', bucketListController.getItems)
+router.get('/auth/bucketlists/:id/items', authUser, bucketListController.getItems)
 
 /* 
 * @method: GET
@@ -90,7 +91,7 @@ router.get('/auth/bucketlists/:id/items', bucketListController.getItems)
 * @auth: Private
 * @desc: Get a single item in a bucketlist
 */
-router.get('/auth/bucketlists/:id/items/:id', bucketListController.getItem)
+router.get('/auth/bucketlists/:id/items/:id', authUser, bucketListController.getItem)
 
 /* 
 * @method: PUT
@@ -98,7 +99,7 @@ router.get('/auth/bucketlists/:id/items/:id', bucketListController.getItem)
 * @auth: Private
 * @desc: Update a single item in a bucketlist
 */
-router.put('/auth/bucketlists/:id/items/:id', bucketListController.updateItem)
+router.put('/auth/bucketlists/:id/items/:id', authUser, bucketListController.updateItem)
 
 /* 
 * @method: DELETE
@@ -106,6 +107,6 @@ router.put('/auth/bucketlists/:id/items/:id', bucketListController.updateItem)
 * @auth: Private
 * @desc: Delete a single item in a bucketlist
 */
-router.delete('/auth/bucketlists/:id/items/:id', bucketListController.deleteItem)
+router.delete('/auth/bucketlists/:id/items/:id', authUser, bucketListController.deleteItem)
 
 module.exports = router
