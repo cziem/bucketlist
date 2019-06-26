@@ -287,3 +287,5 @@ module.exports = {
     }
   }
 }
+
+const escapeRegex = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
