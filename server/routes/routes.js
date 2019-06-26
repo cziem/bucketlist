@@ -6,11 +6,19 @@ const bucketListController = require('../controllers/controller.js')
 
 /* 
 * @method: POST
+* @route: api/v1/auth/signup
+* @auth: Public
+* @desc: Create a user
+*/
+router.post('/auth/signup', bucketListController.signup)
+
+/* 
+* @method: POST
 * @route: api/v1/auth/login
 * @auth: Public
 * @desc: Login a user
 */
-router.post('/login', bucketListController.login)
+router.post('/auth/login', bucketListController.login)
 
 /* 
 * @method: GET

@@ -5,13 +5,20 @@ const Schema = mongoose.Schema
 const ListItems = require('./listItems')
 
 const bucketListSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date },
-  todoList: [ListItems],
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
+  todoList: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'listitems'
+    }
+  ],
+  createdBy: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
   }
 })
 
