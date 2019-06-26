@@ -1,18 +1,29 @@
 {
-  "name": "bucklist-app",
-  "version": "1.0.0",
-  "description": "A bucketlist app built with REST architecture",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "API",
-    "NodeJs",
-    "Javascript",
-    "MongoDB",
-    "auth"
-  ],
-  "author": "Favour George <phavorsparks@gmail.com>",
-  "license": "MIT"
+	"name": "bucketlist-server",
+	"version": "1.0.0",
+	"description": "A bucketlist app built with REST architecture",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index",
+		"start:dev": "nodemon index"
+	},
+	"keywords": [
+		"API",
+		"NodeJs",
+		"Javascript",
+		"MongoDB",
+		"auth"
+	],
+	"author": "Favour George <phavorsparks@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"nodemon": "1.19.1"
+	},
+	"dependencies": {
+		"body-parser": "1.19.0",
+		"cors": "2.8.5",
+		"express": "4.17.1",
+		"jsonwebtoken": "8.5.1",
+		"mongoose": "5.6.1"
+	}
 }

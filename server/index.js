@@ -10,7 +10,7 @@ const port = process.env.PORT
 const uri = process.env.MONGODB_URI
 
 /* Import Bucklist Routes */
-const bucketlistRoutes = require('./routes/index.js')
+const bucketlistRoutes = require('./routes/routes.js')
 
 // Set up the App
 const app = express()
@@ -24,11 +24,11 @@ mongoose.connect(uri, {
   useCreateIndex: true,
   useFindAndModify: true
 })
-  .then(() => console.log(`Bucketlist has connected to DB successfully... ${uri}`))
+  .then(() => console.log(`Bucketlist has connected to DB successfully...`))
   .catch(error => console.error(`An error occurred while connecting to the DB... ${error}`))
 
 /* Application Directives */
 app.use('/api/v1', bucketlistRoutes)
 
 /* Setup the server and expose the port */
-app.listen(port).then(() => console.log(`Bucketlist has connected to DB successfully... view it here: http://localhost:${port}`))
+app.listen(port, () => console.log(`Bucketlist has started at http://localhost:${port}`))

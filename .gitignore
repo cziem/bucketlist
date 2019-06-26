@@ -1,3 +1,3 @@
 # server dir
-/server/node-modules/
+/server/node_modules/
 /server/config/config.json

@@ -1,16 +1,15 @@
 const express = require('express')
+const router = express.Router()
 
 /* import the app route controller logic */
 const bucketListController = require('../controllers/controller.js')
 
-const router = express.Router()
-
 /* 
-* @method: GET
-* @route: api/v1/login
+* @method: POST
+* @route: api/v1/auth/login
 * @auth: Public
 */
-router.get('/login', bucketListController.login)
+router.post('/auth/login', bucketListController.login)
 
 /* 
 * @method: GET
