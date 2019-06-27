@@ -9,7 +9,7 @@ const Welcome = () => {
 		<div className={classes.root}>
 			<Grid container>
 				<Grid item xs={12} className={classes.main}>
-					<Paper className={classes.paper} elevation="2">
+					<Paper className={classes.paper} elevation={2}>
 						<Typography variant="h2" className={classes.title}>
 							<span style={{ color: '#6767e6' }}>Bucket</span>
 							<span style={{ color: '#8383d4' }}>List</span>

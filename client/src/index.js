@@ -4,11 +4,15 @@ import './styles/index.css';
 import App from './components/App';
 import Routes from './routes/routes'
 import * as serviceWorker from './serviceWorker';
+import { StoreProvider } from './store/Store'
 
 ReactDOM.render(
-  <Routes>
-    <App />
-  </Routes>, document.getElementById('root'));
+  <StoreProvider>
+    <Routes>
+      <App />
+    </Routes>  
+  </StoreProvider>,
+   document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
