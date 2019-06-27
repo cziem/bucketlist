@@ -18,7 +18,6 @@ module.exports = {
 
       const hashed = await bcrypt.hash(password, process.env.SALT_ROUNDS)
 
-
       const payload = { user: user.name, id: user._id }
       const options = { expiresIn: '2d' }
       const secret = process.env.APP_SECRET
@@ -305,3 +304,5 @@ module.exports = {
     }
   }
 }
+
+const escapeRegex = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
