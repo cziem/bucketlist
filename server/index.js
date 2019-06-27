@@ -11,6 +11,7 @@ const uri = process.env.MONGODB_URI
 
 /* Import Bucklist Routes */
 const bucketlistRoutes = require('./routes/routes.js')
+const docLink = require('./middlewares/docs')
 
 // Set up the App
 const app = express()
@@ -28,6 +29,7 @@ mongoose.connect(uri, {
   .catch(error => console.error(`An error occurred while connecting to the DB... ${error}`))
 
 /* Application Directives */
+app.use('/api/', docLink)
 app.use('/api/v1', bucketlistRoutes)
 
 /* Setup the server and expose the port */
