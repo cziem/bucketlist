@@ -118,23 +118,41 @@ module.exports = {
     const pageNo = parseInt(req.query.page) || 1
     const size = parseInt(req.query.limit) || 20
     const query = {}
+    const search = req.query.q || ''
 
     query.skip = size * (pageNo - 1)
     query.limit = size
 
     if (size > 100) return res.status(400).send('Query limit exceeded. Allowed maximum is 100')
 
-    try {
-      const totalCount = await BucketList.countDocuments({})
-      const buckets = await BucketList.find({}, {}, query)
-      const totalPages = Math.ceil(totalCount / size)
+    if (search) {
+      const searchTerm = new RegExp(escapeRegex(search), "gi")
 
-      return res.json({
-        buckets,
-        pages: totalPages
-      })
-    } catch (error) {
-      return res.status(400).send(error.message)
+      try {
+        const totalCount = await BucketList.countDocuments({})
+        const buckets = await BucketList.find({ name: searchTerm }, {}, query)
+        const totalPages = Math.ceil(totalCount / size)
+
+        return res.json({
+          buckets,
+          pages: totalPages
+        })
+      } catch (error) {
+        return res.status(400).send(error.message)
+      }
+    } else {
+      try {
+        const totalCount = await BucketList.countDocuments({})
+        const buckets = await BucketList.find({}, {}, query)
+        const totalPages = Math.ceil(totalCount / size)
+
+        return res.json({
+          buckets,
+          pages: totalPages
+        })
+      } catch (error) {
+        return res.status(400).send(error.message)
+      }
     }
   },
 
