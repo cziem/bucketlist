@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const BucketList = require('../models/bucketList')
+const escapeRegex = require('../middlewares/escapeRegex')
 
 module.exports = {
   /* Signup user */
@@ -131,6 +132,8 @@ module.exports = {
         const totalCount = await BucketList.countDocuments({})
         const buckets = await BucketList.find({ name: searchTerm }, {}, query)
         const totalPages = Math.ceil(totalCount / size)
+
+        if (buckets.length < 1) return res.json({ data: 'No results found' })
 
         return res.json({
           buckets,
@@ -304,5 +307,3 @@ module.exports = {
     }
   }
 }
-
-const escapeRegex = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
