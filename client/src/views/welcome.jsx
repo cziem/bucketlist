@@ -32,6 +32,7 @@ const Welcome = () => {
 								size="large"
 								color="primary"
 								fullWidth
+								href="/login"
 							>
 								login
 							</Button>
@@ -40,6 +41,7 @@ const Welcome = () => {
 								color="secondary"
 								size="large"
 								fullWidth
+								href="/signup"
 							>
 								sign up
 							</Button>
