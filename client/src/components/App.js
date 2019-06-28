@@ -3,10 +3,10 @@ import '../styles/App.css';
 import { Store } from '../store/Store'
 
 function App() {
-  const store = useContext(Store)
+  const { state } = useContext(Store)
   return (
     <React.Fragment>
-      {console.log(store)}
+      {console.log(state)}
       <div className="App">
         <header className="App-header">
           <p>

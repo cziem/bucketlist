@@ -52,11 +52,13 @@ const Signup = () => {
 
 			const userDetails = {
 				username,
-				password
+				password,
+				email,
+				name
 			};
 
 			axios
-				.post('/auth/login', userDetails)
+				.post('/auth/signup', userDetails)
 				.then(res => {
 					console.log(res.data);
 				})

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Grid,
@@ -12,9 +12,11 @@ import {
 	CircularProgress
 } from '@material-ui/core/';
 import isEmpty from '../../validation/isEmpty';
-import axios from 'axios';
+import { login } from '../../actions/Actions';
+import { Store } from '../../store/Store';
 
 const Login = () => {
+	const { state, dispatch } = useContext(Store);
 	const classes = useStyles();
 	const initialState = {
 		username: '',
@@ -49,19 +51,10 @@ const Login = () => {
 
 			const userDetails = {
 				username,
-				password,
-				email,
-				name
+				password
 			};
 
-			axios
-				.post('/auth/signup', userDetails)
-				.then(res => {
-					console.log(res.data);
-				})
-				.catch(err => {
-					console.log(err.response.data);
-				});
+			login(dispatch, userDetails);
 		}
 
 		clearState();
