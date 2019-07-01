@@ -11,6 +11,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
+      console.log(action, 'store')
       return { ...state, user: action.payload, isLoggedIn: true }
 
     case 'SIGNUP':

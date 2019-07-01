@@ -6,7 +6,7 @@ function App() {
   const { state } = useContext(Store)
   return (
     <React.Fragment>
-      {console.log(state)}
+      {console.log(state, 'dashboard')}
       <div className="App">
         <header className="App-header">
           <p>

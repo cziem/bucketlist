@@ -64,6 +64,7 @@ const Login = () => {
 
 	return (
 		<React.Fragment>
+			{console.log(state)}
 			<div className={classes.root}>
 				<Grid container>
 					<Grid item xs={12} className={classes.main}>

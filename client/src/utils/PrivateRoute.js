@@ -6,13 +6,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const { state } = useContext(Store);
   return (
     <React.Fragment>
-      {console.log(state)}
+      {console.log(state, 'privateRoute')}
       <Route
         {...rest}
         render={props => state.isLoggedIn === true ? (
           <Component {...props} />
         ) : (
-            <Redirect to="/" />
+            <Redirect to="/login" />
           )}
       />
     </React.Fragment>
