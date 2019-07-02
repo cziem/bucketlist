@@ -3,7 +3,6 @@ import setAuthToken from '../../utils/setAuthToken'
 import { LOGIN, SIGNUP, SET_ERRORS, LOGOUT } from '../types/types';
 
 export const login = async (dispatch, userData) => {
-  console.log('userdata =>', userData)
   axios
     .post('/auth/login', userData)
     .then(res => {

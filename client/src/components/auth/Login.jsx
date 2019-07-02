@@ -55,8 +55,12 @@ const Login = ({ history }) => {
 				password
 			};
 
-			login(dispatch, userDetails);
-			history.push('/dashboard');
+			try {
+				login(dispatch, userDetails);
+			} finally {
+				history.push('/dashboard');
+			}
+
 			// useEffect(() => history.push('/dashboard'), [state]);
 		}
 
