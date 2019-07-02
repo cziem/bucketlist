@@ -1,5 +1,6 @@
 import axios from "axios";
-import setAuthToken from '../utils/setAuthToken'
+import setAuthToken from '../../utils/setAuthToken'
+import { LOGIN, SIGNUP, SET_ERRORS, LOGOUT } from '../types/types';
 
 export const login = async (dispatch, payload) => {
   axios
@@ -10,16 +11,16 @@ export const login = async (dispatch, payload) => {
 
       setAuthToken(`Bearer ${token}`)
 
-      window.location.href = '/dashboard'
+      // window.location.href = '/dashboard'
 
       return dispatch({
-        type: 'LOGIN',
+        type: LOGIN,
         payload: res.data
       })
     })
     .catch(err => {
       return dispatch({
-        type: 'GET_ERROR',
+        type: SET_ERRORS,
         payload: err.response.data
       })
     });
@@ -30,13 +31,13 @@ export const signup = (dispatch, payload) => {
     .post('/auth/signup', payload)
     .then(res => {
       return dispatch({
-        type: 'SIGNUP',
+        type: SIGNUP,
         payload: res.data
       })
     })
     .catch(err => {
       return dispatch({
-        type: 'SET_ERROR',
+        type: SET_ERRORS,
         payload: err.response.data
       })
     })
@@ -48,6 +49,6 @@ export const logoutUser = (dispatch) => {
   setAuthToken(false)
 
   return dispatch({
-    type: 'LOGOUT'
+    type: LOGOUT
   })
 } 
