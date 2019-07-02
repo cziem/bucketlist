@@ -18,10 +18,10 @@ if (localStorage.jwtToken) {
 
 const Routes = () => (
 	<BrowserRouter>
+		<Route exact path="/" component={Welcome} />
+		<Route exact path="/login" component={Login} />
+		<Route exact path="/signup" component={Signup} />
 		<Switch>
-			<Route exact path="/" component={Welcome} />
-			<Route exact path="/login" component={Login} />
-			<Route exact path="/signup" component={Signup} />
 			<PrivateRoute exact path="/dashboard" component={Dashboard} />
 		</Switch>
 	</BrowserRouter>
