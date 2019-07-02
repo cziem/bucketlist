@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography, Button, Divider } from '@material-ui/core/';
+import { useStore } from '../globalStore/store/Store';
 
 const Welcome = () => {
 	const classes = useStyles();
+	const { state, dispatch } = useStore();
 
 	return (
 		<div className={classes.root}>
+			{/* {console.log(useStore, 'welcome')} */}
 			<Grid container>
 				<Grid item xs={12} className={classes.main}>
 					<Paper className={classes.paper} elevation={2}>

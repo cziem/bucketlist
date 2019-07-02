@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Grid,
@@ -12,10 +13,10 @@ import {
 	CircularProgress
 } from '@material-ui/core/';
 import isEmpty from '../../validation/isEmpty';
-import { login } from '../../actions/Actions';
-import { Store } from '../../store/Store';
+import { login } from '../../globalStore/actions/userActions';
+import { Store } from '../../globalStore/store/Store';
 
-const Login = () => {
+const Login = ({ history }) => {
 	const { state, dispatch } = useContext(Store);
 	const classes = useStyles();
 	const initialState = {
@@ -55,6 +56,7 @@ const Login = () => {
 			};
 
 			login(dispatch, userDetails);
+			history.push('/dashboard');
 		}
 
 		clearState();
@@ -64,6 +66,7 @@ const Login = () => {
 
 	return (
 		<React.Fragment>
+			{console.log(state)}
 			<div className={classes.root}>
 				<Grid container>
 					<Grid item xs={12} className={classes.main}>
@@ -199,4 +202,4 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default Login;
+export default withRouter(Login);
