@@ -9,7 +9,7 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case LOGIN:
-      console.log(action, 'store')
+      console.log(action, 'from store')
       return { ...state, user: action.payload, isLoggedIn: true }
 
     case SIGNUP:

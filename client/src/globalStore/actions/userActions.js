@@ -2,16 +2,15 @@ import axios from "axios";
 import setAuthToken from '../../utils/setAuthToken'
 import { LOGIN, SIGNUP, SET_ERRORS, LOGOUT } from '../types/types';
 
-export const login = async (dispatch, payload) => {
+export const login = async (dispatch, userData) => {
+  console.log('userdata =>', userData)
   axios
-    .post('/auth/login', payload)
+    .post('/auth/login', userData)
     .then(res => {
       const { token } = res.data
       localStorage.setItem('jwtToken', token)
 
       setAuthToken(`Bearer ${token}`)
-
-      // window.location.href = '/dashboard'
 
       return dispatch({
         type: LOGIN,

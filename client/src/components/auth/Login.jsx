@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -57,6 +57,7 @@ const Login = ({ history }) => {
 
 			login(dispatch, userDetails);
 			history.push('/dashboard');
+			// useEffect(() => history.push('/dashboard'), [state]);
 		}
 
 		clearState();
@@ -66,7 +67,6 @@ const Login = ({ history }) => {
 
 	return (
 		<React.Fragment>
-			{console.log(state)}
 			<div className={classes.root}>
 				<Grid container>
 					<Grid item xs={12} className={classes.main}>
