@@ -17,7 +17,7 @@ import { login } from '../../globalStore/actions/userActions';
 import { Store } from '../../globalStore/store/Store';
 
 const Login = ({ history }) => {
-	const { state, dispatch } = useContext(Store);
+	const { dispatch } = useContext(Store);
 	const classes = useStyles();
 	const initialState = {
 		username: '',
@@ -28,6 +28,13 @@ const Login = ({ history }) => {
 	const [{ username, password, isValid, loading }, setState] = useState(
 		initialState
 	);
+
+	// Redirect if the login details are correct
+	useEffect(() => {
+		if (initialState.isValid) {
+			history.push('/dashboard');
+		}
+	}, [initialState.isValid, history]);
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -46,7 +53,7 @@ const Login = ({ history }) => {
 		e.preventDefault();
 
 		if (isEmpty(username) || isEmpty(password)) {
-			setState(prevState => ({ isValid: false }));
+			setState(prevState => ({ ...prevState, isValid: false }));
 		} else {
 			setState(prevState => ({ ...prevState, isValid: true, loading: true }));
 
@@ -55,13 +62,7 @@ const Login = ({ history }) => {
 				password
 			};
 
-			try {
-				login(dispatch, userDetails);
-			} finally {
-				history.push('/dashboard');
-			}
-
-			// useEffect(() => history.push('/dashboard'), [state]);
+			login(dispatch, userDetails);
 		}
 
 		clearState();
